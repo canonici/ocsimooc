@@ -1,0 +1,128 @@
+
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700);
+
+/*****************************************************************************
+/* Misc boxes */
+
+.eba-body .video-container {
+    width: 70%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.eba-body .video-container video {
+    width: 100%;
+}
+
+.eba-body .slide-container {
+    width: 70%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.slide-container .slide-title {
+    font-size: 160%;
+    text-align: center;
+    vertical-align: text-bottom;
+}
+
+.slide-container .slide-title:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.slide-container .prev-button {
+    float: left;
+    padding: 0 4pt 0 4pt;
+    font-size: 130%;
+    vertical-align: text-bottom;
+}
+
+.slide-container .prev-button:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.slide-container .next-button:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.slide-container .next-button {
+    float: right;
+    padding: 0 4pt 0 4pt;
+    font-size: 130%;
+    vertical-align: text-bottom;
+}
+
+.eba-body .slide {
+    border: 1px solid black;
+    width: 100%;
+    font-size: 130%;
+}
+
+.eba-body .slide-list {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-right: 1px solid black;
+    background-color: white;
+}
+
+ul.slide-list {
+    overflow-y: scroll;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+ul.slide-list li {
+    display: block;
+    padding: 2px;
+}
+
+ul.slide-list li:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.msg-list {
+    width: 100%;
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.msg-list li {
+}
+
+.msg-list .msg-from {
+    margin-left: 5px;
+    display: inline-block;
+    max-width: 25%;
+}
+
+.msg-list .msg-time {
+    display: inline-block;
+    width: 10%;
+    text-align: right;
+}
+
+.msg-list .msg-time:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.msg-list .msg-content {
+    display: inline-block;
+    margin-left: 4px;
+    width: auto;
+    text-align: left;
+}
+
+.ocismooc-mooc {
+}
