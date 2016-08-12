@@ -173,55 +173,47 @@ let settings_handler =
 
 ]
 
-let%server vid = Eliom_content.Html.Id.new_elt_id ()
-let%client vid = ~%vid
-let%server insert = Eliom_content.Html.D.(
-  let slide ~title ~content =
-    title, Ocsimooc_lib.Content.ul content
-  in
-  let tst_slides n =
-    let f i =
-      Int64.of_int (20 * i),
-      (let title = Printf.sprintf "Slide %d" i
-      and content =
-	 let open Ocsimooc_lib.Content in
-	 !. "one"
-	  |+ (!. "two.one"
-		 |. "two.two")
-	  |. "three"
-       in
-       slide ~title ~content)
-    in
-    Ocsimooc_lib.List.init f n
-  in
-  fun id_o () ->
-    let e, get, set =
-      Ocsimooc_play.show_with_video
-	"http://www.irill.org/media/OUPS/2014-06/Ocsigen.webm"
-	(tst_slides 50)
-    in
-    let%lwt input = Ocsimooc_msg.input get id_o in
-    let%lwt messages = Ocsimooc_msg.display set id_o in
-    ignore [%client (
-      Lwt.async @@ fun () ->
-	Eliom_content.Html.Manip.Named.removeChildren vid;
-	Eliom_content.Html.Manip.Named.appendChildren vid
-	  [~%e; ~%messages; ~%input];
-	Lwt.return ()
-	  : unit)];
-    Lwt.return ()
-)
-let%client insert =
-  let rpc =
-    ~%(Eliom_client.server_function [%derive.json : unit]
-	 (Eba_session.Opt.connected_rpc @@ fun id_o -> insert id_o))
-  in
-  fun _ () -> rpc ()
 
-let%shared main_service_handler id_o () () = Eliom_content.Html.D.(
-  let d = Eliom_content.Html.Id.create_named_elt ~id:vid @@
-    div ~a:[a_class ["ocsimooc-mooc"]] []
+let%server mooc_div :
+    int64 option -> unit -> [`Div] Eliom_content.Html.elt Lwt.t
+  = Eliom_content.Html.D.(
+    let slide ~title ~content =
+      title, Ocsimooc_lib.Content.ul content
+    in
+    let tst_slides n =
+      let f i =
+	Int64.of_int (20 * i),
+	(let title = Printf.sprintf "Slide %d" i
+	and content =
+	   let open Ocsimooc_lib.Content in
+	   !. "one"
+	    |+ (!. "two.one"
+		   |. "two.two")
+	    |. "three"
+	 in
+	 slide ~title ~content)
+      in
+      Ocsimooc_lib.List.init f n
+    in
+    fun id_o () ->
+      let e, get, set =
+	Ocsimooc_play.show_with_video
+	  "http://www.irill.org/media/OUPS/2014-06/Ocsigen.webm"
+	  (tst_slides 50)
+      in
+      let%lwt input = Ocsimooc_msg.input get id_o in
+      let%lwt messages = Ocsimooc_msg.display set id_o in
+      Lwt.return @@ div ~a:[a_class ["ocsimooc-mooc"]] [e; messages; input]
+  )
+
+let%client mooc_div =
+  let rpc = 
+    ~%(Eliom_client.server_function [%derive.json : unit]
+	 (Eba_session.Opt.connected_rpc mooc_div))
   in
-  ignore [%client (Lwt.async (Eba_session.Opt.connected_rpc insert) : unit)];
+  fun ( _ :int64 option) -> rpc
+
+let%shared main_service_handler id_o () () =
+  let%lwt d = mooc_div id_o () in
   Ocsimooc_container.page id_o [d]
-)
+
