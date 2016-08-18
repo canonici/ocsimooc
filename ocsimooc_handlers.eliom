@@ -3,8 +3,6 @@
 
  include Eba_handlers
 
- let disconnect = disconnect_handler ()
-
  let upload_user_avatar_handler myid () ((), (cropping, photo)) =
    let avatar_dir =
      List.fold_left Filename.concat
@@ -26,9 +24,6 @@
 ]
 
 [%%client
-
- let disconnect =
-   ~%(Eliom_client.server_function [%derive.json : unit] disconnect)
      
  let set_personal_data_handler' =
     let set_personal_data_rpc =
@@ -208,6 +203,3 @@ let%shared main_service_handler id_o () () =
   let%lwt d = mooc_div id_o () in
   Ocsimooc_container.page id_o [d]
 
-let%shared disconnect_handler () () =
-  let%lwt () = disconnect () in
-  main_service_handler None () ()

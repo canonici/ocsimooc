@@ -28,13 +28,13 @@ let () =
     ~service:Eba_services.sign_up_service'
     Eba_handlers.sign_up_handler;
 
-  Eliom_registration.Action.register
+  Eliom_registration.Unit.register
     ~service:Eba_services.connect_service
     Eba_handlers.connect_handler;
 
-  Ocsimooc_base.App.register
+  Eliom_registration.Unit.register
     ~service:Eba_services.disconnect_service
-    (Ocsimooc_page.page Ocsimooc_handlers.disconnect_handler);
+    Eba_handlers.disconnect_handler;
 
   Eliom_registration.Any.register
     ~service:Eba_services.activation_service
