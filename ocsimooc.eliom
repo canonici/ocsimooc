@@ -32,9 +32,9 @@ let () =
     ~service:Eba_services.connect_service
     Eba_handlers.connect_handler;
 
-  Eliom_registration.Action.register
+  Ocsimooc_base.App.register
     ~service:Eba_services.disconnect_service
-    Ocsimooc_handlers.disconnect_handler;
+    (Ocsimooc_page.page Ocsimooc_handlers.disconnect_handler);
 
   Eliom_registration.Any.register
     ~service:Eba_services.activation_service

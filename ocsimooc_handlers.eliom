@@ -3,12 +3,7 @@
 
  include Eba_handlers
 
- let disconnect_handler () () =
-   disconnect_handler () ();
-   Lwt.return @@ ignore
-     [%client 
-	 (Eliom_client.change_page ~service:Eba_services.main_service () ()
-	    : unit Lwt.t)]
+ let disconnect = disconnect_handler ()
 
  let upload_user_avatar_handler myid () ((), (cropping, photo)) =
    let avatar_dir =
@@ -32,7 +27,10 @@
 
 [%%client
 
-  let set_personal_data_handler' =
+ let disconnect =
+   ~%(Eliom_client.server_function [%derive.json : unit] disconnect)
+     
+ let set_personal_data_handler' =
     let set_personal_data_rpc =
       ~%(Eliom_client.server_function
 	   [%derive.json : ((string * string) * (string * string))]
@@ -71,14 +69,7 @@
 	      (fun _ akey -> activation_handler akey ())))
     in
     fun akey () -> activation_handler_rpc akey
-  
-  let disconnect_handler =
-    let disconnect_rpc =
-      ~%(Eliom_client.server_function
-	   [%derive.json: unit]
-	   (fun () -> disconnect_handler () ()))
-    in
-    fun () () -> disconnect_rpc ()
+
 ]
 
 let%shared password_form ~service () = Eliom_content.Html.D.(
@@ -217,3 +208,6 @@ let%shared main_service_handler id_o () () =
   let%lwt d = mooc_div id_o () in
   Ocsimooc_container.page id_o [d]
 
+let%shared disconnect_handler () () =
+  let%lwt () = disconnect () in
+  main_service_handler None () ()
