@@ -7,7 +7,7 @@
 
 (* notification *)
 
-module Notif = Eba_notif.Make(struct
+module Notif = Os_notif.Make(struct
     type key = unit
     [@@deriving eq]
     type notification = int
@@ -33,8 +33,8 @@ let get_indices () =
   Lwt.return (aux 0 [])
 
 let username uid =
-  let%lwt u = Eba_user.user_of_userid uid in
-  Lwt.return @@ (Eba_user.firstname_of_user u) ^ " " ^ (Eba_user.lastname_of_user u)
+  let%lwt u = Os_user.user_of_userid uid in
+  Lwt.return @@ (Os_user.firstname_of_user u) ^ " " ^ (Os_user.lastname_of_user u)
 
 let add id m s =
   let%lwt db = db in
@@ -46,7 +46,7 @@ let add id m s =
   Lwt.return i
 
 let add m s =
-  let%lwt i = (Eba_session.connected_fun add) m s in
+  let%lwt i = (Os_session.connected_fun add) m s in
   let f uid = Lwt.return (Some i) in
   Notif.notify () f;
   Lwt.return i
@@ -56,14 +56,14 @@ let add m s =
 let%client add =
   let add_rpc =
     ~%(Eliom_client.server_function [%derive.json : add_msg]
-	 (Eba_session.connected_rpc @@ fun _ (m, s) -> add m s))
+	 (Os_session.connected_rpc @@ fun _ (m, s) -> add m s))
   in
   fun m s -> add_rpc (m, s)
 
 let%client get =
   let get_rpc =
     ~%(Eliom_client.server_function [%derive.json : int]
-	 (Eba_session.connected_rpc @@ fun _ m -> get m))
+	 (Os_session.connected_rpc @@ fun _ m -> get m))
   in
   fun m -> get_rpc m
 

@@ -9,35 +9,35 @@
 let () =
   (* Registering services. Feel free to customize handlers. *)
   Eliom_registration.Action.register
-    ~service:Eba_services.set_personal_data_service'
-    (Eba_session.connected_fun Ocsimooc_handlers.set_personal_data_handler');
+    ~service:Os_services.set_personal_data_service'
+    (Os_session.connected_fun Ocsimooc_handlers.set_personal_data_handler');
 
   Eliom_registration.Action.register
-    ~service:Eba_services.set_password_service'
-    (Eba_session.connected_fun Ocsimooc_handlers.set_password_handler');
+    ~service:Os_services.set_password_service'
+    (Os_session.connected_fun Ocsimooc_handlers.set_password_handler');
 
   Eliom_registration.Action.register
-    ~service:Eba_services.forgot_password_service
+    ~service:Os_services.forgot_password_service
     Ocsimooc_handlers.forgot_password_handler;
 
   Eliom_registration.Action.register
-    ~service:Eba_services.preregister_service'
+    ~service:Os_services.preregister_service'
     Ocsimooc_handlers.preregister_handler';
 
   Eliom_registration.Action.register
-    ~service:Eba_services.sign_up_service'
-    Eba_handlers.sign_up_handler;
+    ~service:Os_services.sign_up_service'
+    Os_handlers.sign_up_handler;
 
   Eliom_registration.Unit.register
-    ~service:Eba_services.connect_service
-    Eba_handlers.connect_handler;
+    ~service:Os_services.connect_service
+    Os_handlers.connect_handler;
 
   Eliom_registration.Unit.register
-    ~service:Eba_services.disconnect_service
-    Eba_handlers.disconnect_handler;
+    ~service:Os_services.disconnect_service
+    Os_handlers.disconnect_handler;
 
   Eliom_registration.Any.register
-    ~service:Eba_services.activation_service
+    ~service:Os_services.activation_service
     Ocsimooc_handlers.activation_handler;
 
   Ocsimooc_base.App.register
@@ -49,7 +49,7 @@ let () =
     (Ocsimooc_page.Opt.connected_page Ocsimooc_handlers.settings_handler);
 
   Ocsimooc_base.App.register
-    ~service:Eba_services.main_service
+    ~service:Os_services.main_service
     (Ocsimooc_page.Opt.connected_page Ocsimooc_handlers.main_service_handler)
 ]
 
@@ -57,7 +57,7 @@ let () =
 
   Eliom_registration.Ocaml.register
     ~service:Ocsimooc_services.upload_user_avatar_service
-    (Eba_session.connected_fun Ocsimooc_handlers.upload_user_avatar_handler)
+    (Os_session.connected_fun Ocsimooc_handlers.upload_user_avatar_handler)
 
 
 

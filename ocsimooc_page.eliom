@@ -52,7 +52,7 @@ let%shared the_local_css = [
 
 module Page_config = struct
 
-  include Eba_page.Default_config
+  include Os_page.Default_config
 
   let title = "ocsimooc"
 
@@ -80,4 +80,4 @@ module Page_config = struct
 end
 
 
-include Eba_page.Make(Page_config)
+include Os_page.Make(Page_config)

@@ -12,7 +12,7 @@ let () =
       failwith @@ Printf.sprintf
         "PGPORT environment variable must be an integer, not '%s'" s
   in
-  Eba_db.init
+  Os_db.init
     ?host:!Ocsimooc_config.eba_db_host
     ?port:!Ocsimooc_config.eba_db_port
     ?user:!Ocsimooc_config.eba_db_user
@@ -21,7 +21,7 @@ let () =
     ?unix_domain_socket_dir:!Ocsimooc_config.eba_db_unix_domain_socket_dir
     ()
 
-let () = Eba_email.set_mailer "/usr/sbin/sendmail"
+let () = Os_email.set_mailer "/usr/sbin/sendmail"
 
 [%%shared
 module App = Eliom_registration.App(struct
