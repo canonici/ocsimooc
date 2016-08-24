@@ -4,17 +4,17 @@
 /*****************************************************************************
 /* Misc boxes */
 
-.eba-body .video-container {
+.os-body .video-container {
     width: 70%;
     display: inline-block;
     vertical-align: middle;
 }
 
-.eba-body .video-container video {
+.os-body .video-container video {
     width: 100%;
 }
 
-.eba-body .slide-container {
+.os-body .slide-container {
     width: 70%;
     display: inline-block;
     text-align: center;
@@ -56,13 +56,13 @@
     vertical-align: text-bottom;
 }
 
-.eba-body .slide {
+.os-body .slide {
     border: 1px solid black;
     width: 100%;
     font-size: 130%;
 }
 
-.eba-body .slide-list {
+.os-body .slide-list {
     position: fixed;
     left: 0;
     top: 0;

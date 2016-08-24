@@ -10,11 +10,11 @@ let () =
   (* Registering services. Feel free to customize handlers. *)
   Eliom_registration.Action.register
     ~service:Os_services.set_personal_data_service'
-    (Os_session.connected_fun Ocsimooc_handlers.set_personal_data_handler');
+    Ocsimooc_handlers.set_personal_data_handler';
 
   Eliom_registration.Action.register
     ~service:Os_services.set_password_service'
-    (Os_session.connected_fun Ocsimooc_handlers.set_password_handler');
+    Ocsimooc_handlers.set_password_handler';
 
   Eliom_registration.Action.register
     ~service:Os_services.forgot_password_service
@@ -39,6 +39,10 @@ let () =
   Eliom_registration.Any.register
     ~service:Os_services.activation_service
     Ocsimooc_handlers.activation_handler;
+
+  Eliom_registration.Action.register
+    ~service:Os_services.add_mail_service
+    Os_handlers.add_mail_handler;
 
   Ocsimooc_base.App.register
     ~service:Ocsimooc_services.about_service
@@ -76,7 +80,7 @@ let _ =
       [%client (
         (* Eliom_config.debug_timings := true; *)
         (* Lwt_log_core.add_rule "eliom:client*" Lwt_log.Debug; *)
-        (* Lwt_log_core.add_rule "eba*" Lwt_log.Debug; *)
+        (* Lwt_log_core.add_rule "os*" Lwt_log.Debug; *)
         Lwt_log_core.add_rule "Ocsimooc*" Lwt_log.Debug
         (* Lwt_log_core.add_rule "*" Lwt_log.Debug *)
         : unit ) ];
